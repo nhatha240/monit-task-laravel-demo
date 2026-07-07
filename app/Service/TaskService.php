@@ -12,13 +12,16 @@ class TaskService
 
         $role = auth()->user()->role;
         if ($role === Role::User) {
-            $query->where('assigned_to', auth()->user()->id)->orWhere('created_by', auth()->user()->id);
+            $query->where(function ($scope) {
+                $scope->where('assigned_to', auth()->user()->id)
+                    ->orWhere('created_by', auth()->user()->id);
+            });
         }
         if (isset($filter['status'])) {
             $query->where('status', $filter['status']);
         }
 
-        if (isset($filter['assigned_to']) && $role === Role::Admin) {
+        if (isset($filter['assigned_to'])) {
             $query->where('assigned_to', $filter['assigned_to']);
         }
 

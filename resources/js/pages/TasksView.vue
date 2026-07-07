@@ -41,11 +41,12 @@
                                 @update:model-value="reload"
                             />
                         </v-col>
-                        <v-col v-if="isAdmin()" cols="12" sm="4">
+                        <v-col cols="12" sm="4">
                             <v-text-field
                                 v-model.number="filters.assigned_to"
                                 label="Assigned to (user id)"
                                 type="number"
+                                prepend-inner-icon="mdi-magnify"
                                 clearable
                                 hide-details
                                 @update:model-value="reloadDebounced"
@@ -192,7 +193,7 @@ import { useRouter } from 'vue-router'
 import { ApiError } from '@/lib/api'
 import { createTask, deleteTask, listTasks, updateTask  } from '@/lib/tasks'
 import type {TaskPayload} from '@/lib/tasks';
-import { auth, isAdmin, logout } from '@/stores/auth'
+import { auth, logout } from '@/stores/auth'
 import { TASK_STATUSES   } from '@/types'
 import type {Task, TaskStatus} from '@/types';
 
