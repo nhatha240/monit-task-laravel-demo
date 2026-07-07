@@ -1,20 +1,41 @@
-import { createWebHistory, createRouter } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+import { isAuthenticated } from './stores/auth';
 
-import HomeView from './HomeView.vue'
-import AboutView from './AboutView.vue'
-const routes = [
-    { path: '/', component: HomeView },
-    { path: '/about', component: AboutView },
+const routes: RouteRecordRaw[] = [
+    { path: '/', redirect: '/tasks' },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('./pages/LoginView.vue'),
+        meta: { guestOnly: true },
+    },
+    {
+        path: '/tasks',
+        name: 'tasks',
+        component: () => import('./pages/TasksView.vue'),
+        meta: { requiresAuth: true },
+    },
+    { path: '/:pathMatch(.*)*', redirect: '/tasks' },
 ];
 
 const router = createRouter({
-    // Note: We're using createMemoryHistory() here for compatibility
-    //       with the Playground. In a real application you'd usually
-    //       use createWebHistory() or createWebHashHistory() instead,
-    //       tying the route to the browser URL. See the documentation
-    //       for more information about history modes.
     history: createWebHistory(),
     routes,
+});
+
+router.beforeEach((to) => {
+    const authed = isAuthenticated();
+
+    if (to.meta.requiresAuth && !authed) {
+        return { name: 'login', query: { redirect: to.fullPath } };
+    }
+
+    if (to.meta.guestOnly && authed) {
+        return { name: 'tasks' };
+    }
+
+    return true;
 });
 
 export default router;

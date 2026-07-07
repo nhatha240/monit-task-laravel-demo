@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Service\TaskService;
 use App\Http\Requests\TasksGetRequest;
+use Illuminate\Support\Facades\Log;
 
 class TasksControllers extends Controller
 {
@@ -29,9 +30,14 @@ class TasksControllers extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        return response()->json(
-            $this->taskService->create($request->all())
-        );
+        try {
+            return response()->json(
+                $this->taskService->create($request->all())
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message' => 'An error occurred during task creation', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -43,9 +49,14 @@ class TasksControllers extends Controller
      */
     public function update(Request $request,int $id): JsonResponse
     {
-        return response()->json(
-            $this->taskService->update($request->all(), $id)
-        );
+        try {
+            return response()->json(
+                $this->taskService->update($request->all(), $id)
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message' => 'An error occurred during task update', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -56,9 +67,14 @@ class TasksControllers extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        return response()->json(
-            $this->taskService->delete($id)
-        );
+        try {
+            return response()->json(
+                $this->taskService->delete($id)
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message' => 'An error occurred during task deletion', 'error' => $e->getMessage()], 500);
+        }
     }
     /**
      * Display the specified resource.
@@ -68,8 +84,13 @@ class TasksControllers extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        return response()->json(
-            $this->taskService->get($id)
-        );
+        try {
+            return response()->json(
+                $this->taskService->get($id)
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message' => 'An error occurred during task retrieval', 'error' => $e->getMessage()], 500);
+        }
     }
 }

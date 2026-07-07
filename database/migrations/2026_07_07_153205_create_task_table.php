@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('status',)->default('todo')->comment('todo, in_progress, done');
             $table->timestamp('due_date')->nullable();
             $table->unsignedBigInteger('assigned_to')->nullable();

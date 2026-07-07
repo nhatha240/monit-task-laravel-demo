@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
@@ -15,8 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
-#[Fillable(['title', 'description', 'status', 'assigned_to', 'due_date', 'updated_at'])]
-#Guarded(['id', 'created_by', 'created_at'])
+#[Fillable(['title', 'description', 'status', 'assigned_to', 'due_date', 'updated_at','created_by'])]
+#[Guarded(['id', 'created_by', 'created_at'])]
 class Task extends Model
 {
 

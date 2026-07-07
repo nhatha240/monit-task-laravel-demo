@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,7 +26,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon|null $updated_at
  */
 #[Fillable(['name', 'email', 'password', 'role','updated_at'])]
-#Guarded(['id', 'email_verified_at', 'created_at'])
+#[Guarded(['id', 'email_verified_at', 'created_at'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {

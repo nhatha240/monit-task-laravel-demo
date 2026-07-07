@@ -1,7 +1,7 @@
 <template>
-<div> hello word </div>
+    <v-app>
+        <router-view />
+    </v-app>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>

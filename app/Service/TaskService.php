@@ -27,7 +27,9 @@ class TaskService
 
     public function create(array $data): array
     {
+        // Set the created_by field to the authenticated user's ID
         $data['created_by'] = auth()->user()->id;
+
         return \App\Models\Task::create($data)->toArray();
     }
 
