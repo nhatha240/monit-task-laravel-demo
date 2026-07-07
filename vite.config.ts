@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig } from 'vite';
-
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 export default defineConfig({
     plugins: [
         laravel({
@@ -17,18 +17,17 @@ export default defineConfig({
             ],
         }),
         tailwindcss(),
-        vue(
-        //     {
-        //     template: {
-        //         transformAssetUrls: {
-        //             base: null,
-        //             includeAbsolute: false,
-        //         },
-        //     },
-        // }
-        ),
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),
         wayfinder({
             formVariants: true,
         }),
+        vuetify({ autoImport: true }),
     ],
 });
